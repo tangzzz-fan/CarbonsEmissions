@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layout } from 'antd';
+import { Outlet } from 'react-router-dom';
 
 const { Header, Content, Footer } = Layout;
 
@@ -12,7 +13,7 @@ const App: React.FC = () => {
       </Header>
       <Content style={{ padding: '0 50px', minHeight: 'calc(100vh - 134px)' }}>
         <div className="site-layout-content" style={{ padding: 24, minHeight: 380 }}>
-          {/* 路由内容将在这里渲染 */}
+          <Outlet />
         </div>
       </Content>
       <Footer style={{ textAlign: 'center' }}>
@@ -20,6 +21,5 @@ const App: React.FC = () => {
       </Footer>
     </Layout>
   );
-};
 
 export default App;

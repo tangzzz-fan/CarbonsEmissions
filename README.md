@@ -41,6 +41,9 @@
 └── Dockerfile          # 主Dockerfile
 ```
 
+## 项目文档
+- [后端Node.js服务架构说明](backend-node/README.md)
+
 ## 环境要求
 - Node.js >= 16
 - Python >= 3.8
@@ -108,13 +111,13 @@ python -m uvicorn app.main:app --reload
 - 基于RBAC的权限控制
 - 动态菜单配置
 
-### 2. 碳排放数据管理
+### 2. 碳数据管理
 - 数据采集与录入
 - 历史数据查询
 - 数据可视化展示
 
 ### 3. 智能预测分析
-- 碳排放趋势预测
+- 碳趋势预测
 - 多维度数据分析
 - 预警阈值设置
 

@@ -36,4 +36,17 @@ export class AuthService {
             user,
         };
     }
-} 
+
+    async verifyToken(token: string): Promise<any> {
+        try {
+            const decoded = this.jwtService.verify(token);
+            const user = await this.usersService.findByEmail(decoded.email);
+            if (!user) {
+                throw new UnauthorizedException('User not found');
+            }
+            return user;
+        } catch (error) {
+            throw new UnauthorizedException('Invalid token');
+        }
+    }
+}

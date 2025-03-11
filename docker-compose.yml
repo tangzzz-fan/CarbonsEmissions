@@ -29,6 +29,7 @@ services:
     depends_on:
       - postgres
       - redis
+    command: npm run start:dev
 
   backend-python:
     build:

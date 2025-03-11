@@ -8,10 +8,9 @@ RUN apk add --no-cache python3 make g++
 # 复制 package 文件
 COPY package*.json ./
 
-# 安装依赖
-RUN npm install --legacy-peer-deps && \
-    npm install -g @nestjs/cli && \
-    npm cache clean --force
+# 安装项目依赖
+RUN npm install --quiet --no-progress --legacy-peer-deps
+RUN npm install -g @nestjs/cli ts-node tsconfig-paths
 
 # 复制源代码和配置文件
 COPY . .

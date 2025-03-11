@@ -5,7 +5,11 @@ import { validate } from './config/env.validation';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { EmissionsModule } from './modules/emissions/emissions.module';
+import { RolesModule } from './modules/roles/roles.module';
+import { PermissionsModule } from './modules/permissions/permissions.module';
+import { MenusModule } from './modules/menus/menus.module';
 import configuration from './config/configuration';
+import { SeedCommand } from './database/seeders/seed.command';
 
 @Module({
   imports: [
@@ -33,6 +37,12 @@ import configuration from './config/configuration';
     AuthModule,
     UsersModule,
     EmissionsModule,
+    RolesModule,
+    PermissionsModule,
+    MenusModule,
+  ],
+  providers: [
+    SeedCommand
   ],
 })
 export class AppModule { }
