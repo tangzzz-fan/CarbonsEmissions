@@ -1,33 +1,38 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import { Navigate } from 'react-router-dom';
 
 interface AuthGuardProps {
+  children: ReactNode;
   permissionCode?: string;
-  roleName?: string;
-  children: React.ReactNode;
-  fallback?: React.ReactNode;
+  roleCode?: string;
+  redirectTo?: string;
 }
 
 export const AuthGuard: React.FC<AuthGuardProps> = ({
-  permissionCode,
-  roleName,
   children,
-  fallback = null,
+  permissionCode,
+  roleCode,
+  redirectTo = '/login'
 }) => {
-  const { hasPermission, hasRole } = useAuth();
+  const { isAuthenticated, hasPermission, hasRole } = useAuth();
 
-  const hasAccess = () => {
-    if (permissionCode && !hasPermission(permissionCode)) {
-      return false;
-    }
-    if (roleName && !hasRole(roleName)) {
-      return false;
-    }
-    return true;
-  };
+  if (!isAuthenticated) {
+    return <Navigate to={redirectTo} />;
+  }
 
-  return hasAccess() ? <>{children}</> : <>{fallback}</>;
+  if (permissionCode && !hasPermission(permissionCode)) {
+    return <Navigate to="/unauthorized" />;
+  }
+
+  if (roleCode && !hasRole(roleCode)) {
+    return <Navigate to="/unauthorized" />;
+  }
+
+  return <>{children}</>;
 };
+
+export default AuthGuard;
 
 // 权限HOC，用于包装需要权限控制的组件
 export const withAuth = (
@@ -36,7 +41,7 @@ export const withAuth = (
   roleName?: string
 ) => {
   return (props: any) => (
-    <AuthGuard permissionCode={permissionCode} roleName={roleName}>
+    <AuthGuard permissionCode={permissionCode} roleCode={roleName}>
       <WrappedComponent {...props} />
     </AuthGuard>
   );

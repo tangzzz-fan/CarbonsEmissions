@@ -21,5 +21,6 @@ const App: React.FC = () => {
       </Footer>
     </Layout>
   );
+};
 
 export default App;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Space, Modal, message } from 'antd';
+import { Table, Button, Space, message } from 'antd';
 import { useAuth } from '../../hooks/useAuth';
 import { AuthGuard } from '../../components/AuthGuard';
 
@@ -7,8 +7,8 @@ interface User {
   id: number;
   username: string;
   email: string;
-  roles: string[];
-  status: 'active' | 'inactive';
+  role: string;
+  status: string;
 }
 
 const UserList: React.FC = () => {
@@ -47,57 +47,29 @@ const UserList: React.FC = () => {
     },
     {
       title: '角色',
-      dataIndex: 'roles',
-      key: 'roles',
-      render: (roles: string[]) => roles.join(', '),
+      dataIndex: 'role',
+      key: 'role',
     },
     {
       title: '状态',
       dataIndex: 'status',
       key: 'status',
-      render: (status: string) => (
-        <span style={{ color: status === 'active' ? 'green' : 'red' }}>
-          {status === 'active' ? '启用' : '禁用'}
-        </span>
-      ),
     },
     {
       title: '操作',
       key: 'action',
-      render: (_: any, record: User) => (
+      render: (_: any, _record: User) => (
         <Space size="middle">
           {hasPermission('user:edit') && (
-            <Button type="link" onClick={() => handleEdit(record)}>编辑</Button>
+            <Button type="link">编辑</Button>
           )}
           {hasPermission('user:delete') && (
-            <Button type="link" danger onClick={() => handleDelete(record)}>删除</Button>
+            <Button type="link" danger>删除</Button>
           )}
         </Space>
       ),
     },
   ];
-
-  const handleEdit = (user: User) => {
-    // TODO: 实现编辑用户功能
-    console.log('Edit user:', user);
-  };
-
-  const handleDelete = (user: User) => {
-    Modal.confirm({
-      title: '确认删除',
-      content: `确定要删除用户 ${user.username} 吗？`,
-      onOk: async () => {
-        try {
-          // TODO: 替换为实际的API调用
-          await fetch(`/api/users/${user.id}`, { method: 'DELETE' });
-          message.success('删除成功');
-          fetchUsers();
-        } catch (error) {
-          message.error('删除失败');
-        }
-      },
-    });
-  };
 
   return (
     <AuthGuard permissionCode="user:view">

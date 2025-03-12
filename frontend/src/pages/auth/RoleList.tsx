@@ -155,7 +155,9 @@ const RoleList: React.FC = () => {
             dataSource={permissions}
             titles={['可选权限', '已选权限']}
             targetKeys={selectedPermissions}
-            onChange={setSelectedPermissions}
+            onChange={(nextTargetKeys) => {
+              setSelectedPermissions(nextTargetKeys.map(key => String(key)));
+            }}
             render={item => item.title}
           />
         </Modal>

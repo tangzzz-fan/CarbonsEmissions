@@ -9,7 +9,6 @@ import { RolesModule } from './modules/roles/roles.module';
 import { PermissionsModule } from './modules/permissions/permissions.module';
 import { MenusModule } from './modules/menus/menus.module';
 import configuration from './config/configuration';
-import { SeedCommand } from './database/seeders/seed.command';
 
 @Module({
   imports: [
@@ -42,7 +41,6 @@ import { SeedCommand } from './database/seeders/seed.command';
     MenusModule,
   ],
   providers: [
-    SeedCommand
   ],
 })
 export class AppModule { }

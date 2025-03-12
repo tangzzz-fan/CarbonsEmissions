@@ -1,21 +1,17 @@
+export type Permission = string;
+
 export interface User {
-  id: number;
+  id: string;
   username: string;
-  email: string;
-  roles: Role[];
+  role: string;
+  permissions?: Permission[];
+  // 其他用户属性
 }
 
 export interface Role {
   id: number;
   name: string;
   permissions: Permission[];
-}
-
-export interface Permission {
-  id: number;
-  code: string;
-  name: string;
-  description?: string;
 }
 
 export interface AuthState {
