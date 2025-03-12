@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToMany, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { Role } from '../../roles/entities/role.entity';
 
 @Entity('menus')
@@ -21,10 +21,7 @@ export class Menu {
     @Column({ default: 0 })
     sort: number;
 
-    @Column({ nullable: true })
-    parentId: number;
-
-    @ManyToOne(() => Menu, menu => menu.children)
+    @ManyToOne(() => Menu, menu => menu.children, { nullable: true })
     @JoinColumn({ name: 'parentId' })
     parent: Menu;
 
@@ -34,15 +31,12 @@ export class Menu {
     @Column({ default: true })
     isActive: boolean;
 
-    @Column({ default: false })
-    hidden: boolean;
-
-    @ManyToMany(() => Role, role => role.menus)
-    roles: Role[];
-
     @CreateDateColumn()
     createdAt: Date;
 
     @UpdateDateColumn()
     updatedAt: Date;
+
+    @ManyToMany(() => Role, role => role.menus)
+    roles: Role[];
 }

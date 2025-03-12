@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 
 @Entity('emissions')
@@ -15,10 +15,11 @@ export class Emission {
     @Column()
     source: string;
 
-    @Column({ type: 'timestamp' })
+    @Column('timestamp')
     measurementTime: Date;
 
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, user => user.emissions)
+    @JoinColumn({ name: 'userId' })
     user: User;
 
     @CreateDateColumn()
